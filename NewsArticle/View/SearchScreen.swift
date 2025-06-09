@@ -12,10 +12,37 @@ struct SearchScreen: View {
     @StateObject private var newsService = NewsService()
     @State private var searchedArticles: [Article] = []
     
+    @State private var selectedSort: SortType = .newest
+    @State private var selectedCategory: String = "All"
+    
     var body: some View {
         NavigationView {
             VStack {
-                if searchedArticles.isEmpty {
+                // 🔹 Filter Bar
+                HStack {
+                    Picker("Sort", selection: $selectedSort) {
+                        ForEach(SortType.allCases, id: \.self) { sort in
+                            Text(sort.rawValue)
+                        }
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                    
+                    Spacer()
+                    
+                    Picker("Category", selection: $selectedCategory) {
+                        Text("All").tag("All")
+                        Text("Business").tag("Business")
+                        Text("Technology").tag("Technology")
+                        Text("Sports").tag("Sports")
+                        Text("Health").tag("Health")
+                        Text("Science").tag("Science")
+                    }
+                    .pickerStyle(MenuPickerStyle())
+                }
+                .padding(.horizontal)
+
+                // 🔹 Empty State or Results
+                if filteredArticles.isEmpty {
                     Spacer()
                     VStack {
                         Image(systemName: "doc.text.magnifyingglass")
@@ -27,7 +54,7 @@ struct SearchScreen: View {
                     }
                     Spacer()
                 } else {
-                    List(searchedArticles) { article in
+                    List(filteredArticles) { article in
                         NavigationLink(destination: DetailScreen(articles: article)) {
                             NewsCardView(article: article)
                         }
@@ -47,6 +74,27 @@ struct SearchScreen: View {
         }
     }
     
+    // 🔹 Filtering and Sorting Logic
+    var filteredArticles: [Article] {
+        var filtered = searchedArticles
+        
+        if selectedCategory != "All" {
+            filtered = filtered.filter { article in
+                article.title.lowercased().contains(selectedCategory.lowercased())
+            }
+        }
+        
+        switch selectedSort {
+        case .newest:
+            filtered.sort { $0.publishedAt! > $1.publishedAt! }
+        case .oldest:
+            filtered.sort { $0.publishedAt! < $1.publishedAt! }
+        }
+        
+        return filtered
+    }
+    
+    // 🔹 Search API Call
     func searchArticles(keyword: String) {
         newsService.searchArticles(query: keyword) { result in
             DispatchQueue.main.async {
@@ -61,3 +109,9 @@ struct SearchScreen: View {
         }
     }
 }
+
+//// 🔹 Sorting Type Enum
+//enum SortType: String, CaseIterable {
+//    case newest = "Newest"
+//    case oldest = "Oldest"
+//}
