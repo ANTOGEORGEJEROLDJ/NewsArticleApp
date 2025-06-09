@@ -13,17 +13,18 @@ struct NewsResponse: Codable {
 }
 
 struct Article: Codable, Identifiable {
-    let id = UUID() // For SwiftUI List
+    let id = UUID()
     let title: String
     let urlToImage: String?
-    let publishedAt: String
-    let description: String
+    let publishedAt: String?
+    let description: String?
     let author: String?
 
+    private enum CodingKeys: String, CodingKey {
+        case title, description, urlToImage, publishedAt, author
+    }
 }
-private enum CodingKeys: String, CodingKey {
-    case title, description, urlToImage, url, publishedAt, source
-}
+
 
 
 struct Source: Codable {
