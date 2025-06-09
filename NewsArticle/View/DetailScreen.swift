@@ -13,7 +13,7 @@ struct DetailScreen: View {
     
     var body: some View {
         ZStack {
-            Color.white
+            Color(UIColor.systemBackground)
                 .ignoresSafeArea()
             
             ScrollView {
@@ -76,7 +76,7 @@ struct DetailScreen: View {
                     }
                     .padding()
                     .frame(width: 400,height: 500)
-                    .background(Color.white)
+                    .background(Color(UIColor.secondarySystemBackground))
                     .cornerRadius(12)
                     
                 }

@@ -14,13 +14,7 @@ struct NewsCardView: View {
         ZStack {
             // Background card
             RoundedRectangle(cornerRadius: 20)
-                .fill(
-                    LinearGradient(
-                        gradient: Gradient(colors: [.white, Color.blue.opacity(0.05)]),
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
-                    )
-                )
+                .fill(Color(UIColor.secondarySystemBackground))
 //                .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
                 .shadow(radius: 5)
 

@@ -12,47 +12,43 @@ struct TapView: View {
 
     var body: some View {
         ZStack(alignment: .bottom) {
-            VStack {
+            Group {
                 switch selectedTab {
                 case .home:
                     HomeScreen()
                 case .search:
                     SearchScreen()
                 }
-
-                Spacer()
-                
-                FloatingTabBar(selectedTab: $selectedTab)
-                    .padding(.bottom, 20)
             }
+
+            // Floating Tab Bar
+            FloatingTabBar(selectedTab: $selectedTab)
+                .padding(.bottom, -20)
         }
+        .background(Color.clear.ignoresSafeArea()) // Make sure background is clear
     }
 
-    // MARK: - Enum for Tab
     enum Tab {
         case home, search
     }
 }
 
-// MARK: - Floating Tab Bar
 struct FloatingTabBar: View {
     @Binding var selectedTab: TapView.Tab
 
     var body: some View {
-        HStack(spacing: 150) {
+        HStack(spacing: 100) {
             TabBarButton(icon: "house.fill", tab: .home, selectedTab: $selectedTab, color: .orange)
-            
             TabBarButton(icon: "magnifyingglass", tab: .search, selectedTab: $selectedTab, color: .orange)
         }
         .padding()
-        .background(.ultraThinMaterial)
-        .cornerRadius(40)
-        .shadow(color: .black.opacity(0.2), radius: 10, x: 0, y: 5)
+        .background(Color(UIColor.systemBackground))
+        .clipShape(Capsule())
+        .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 4)
         .padding(.horizontal)
     }
 }
 
-// MARK: - Tab Button
 struct TabBarButton: View {
     let icon: String
     let tab: TapView.Tab
@@ -68,7 +64,7 @@ struct TabBarButton: View {
             Image(systemName: icon)
                 .font(.system(size: 22, weight: .bold))
                 .foregroundColor(selectedTab == tab ? color : .gray)
-                .padding(12)
+                .padding(10)
                 .background(
                     Circle()
                         .fill(selectedTab == tab ? color.opacity(0.2) : Color.clear)

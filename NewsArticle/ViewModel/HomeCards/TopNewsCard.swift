@@ -12,8 +12,7 @@ struct TopNewsCard: View {
     let article: Article
 
     var body: some View {
-        
-        ZStack(alignment: .leading) {
+        ZStack(alignment: .bottomLeading) {
             AsyncImage(url: URL(string: article.urlToImage ?? "")) { phase in
                 if let image = phase.image {
                     image
@@ -29,18 +28,25 @@ struct TopNewsCard: View {
             .cornerRadius(16)
             .shadow(radius: 4)
 
-            Text(article.title)
-                .font(.system(size: 15))
-                .bold()
-                .foregroundColor(.white)
-                .lineLimit(3)
-                .padding()
-                .padding(.top, 100)
+            VStack(alignment: .leading) {
+                //                Text(article.title ?? "Unknown")
+                //                    .font(.caption)
+                //                    .bold()
+                //                    .foregroundColor(.white.opacity(0.9))
+                
+                Text(article.title)
+                    .font(.system(size: 15))
+                    .bold()
+                    .foregroundColor(.white)
+                    .lineLimit(3)
+                    .padding()
+                    .padding(.top, 100)
+            }
+            .padding()
+            .background(LinearGradient(colors: [.black.opacity(0.5), .clear], startPoint: .bottom, endPoint: .top))
+            .cornerRadius(16)
         }
         .frame(width: 340)
-        .padding()
-        .background(.white)
-        .cornerRadius(20)
-        
+        .padding(.vertical)
     }
 }
