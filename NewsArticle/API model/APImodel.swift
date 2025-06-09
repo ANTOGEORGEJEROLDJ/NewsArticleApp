@@ -21,3 +21,11 @@ struct Article: Codable, Identifiable {
     let author: String?
 
 }
+private enum CodingKeys: String, CodingKey {
+    case title, description, urlToImage, url, publishedAt, source
+}
+
+
+struct Source: Codable {
+let name: String?
+}

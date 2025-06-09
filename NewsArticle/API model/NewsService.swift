@@ -29,7 +29,7 @@ class NewsService: ObservableObject {
     }
     
     func searchArticles(query: String, completion: @escaping (Result<[Article], Error>) -> Void) {
-        let apiKey = "YOUR_NEWS_API_KEY"
+        let apiKey = "cc25bb5dcf664f72b46179809c871f6e"
         let urlString = "https://newsapi.org/v2/everything?q=\(query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")&apiKey=\(apiKey)"
         
         guard let url = URL(string: urlString) else { return }

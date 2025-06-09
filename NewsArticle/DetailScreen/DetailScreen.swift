@@ -85,22 +85,22 @@ struct DetailScreen: View {
     }
     
 }
-#Preview {
-    NavigationView {
-        DetailScreen(articles: sampleArticle)
-    }
-}
-let sampleArticle = Article(
-    title: "Alexander wears modified helmet in road races",
-    urlToImage: "https://picsum.photos/600/400",
-    publishedAt: "2025-06-08T08:35:09Z",
-    description: """
-As a tech department, we're usually pretty good at spotting tech that's out of the ordinary. During time trials we're used to seeing new aero innovation, and while there are certainly aero tricks used in road stages, they are harder to spot.
-
-A case in point, throughout the Volta ao Algarve, Alexander Kristoff has been wearing an old discontinued time trial helmet...
-""",
-    author: "CNN Indonesia"
-)
+//#Preview {
+//    NavigationView {
+//        DetailScreen(articles: sampleArticle)
+//    }
+//}
+////let sampleArticle = Article(
+//    title: "Alexander wears modified helmet in road races",
+//    urlToImage: "https://picsum.photos/600/400",
+//    publishedAt: "2025-06-08T08:35:09Z",
+//    description: """
+//As a tech department, we're usually pretty good at spotting tech that's out of the ordinary. During time trials we're used to seeing new aero innovation, and while there are certainly aero tricks used in road stages, they are harder to spot.
+//
+//A case in point, throughout the Volta ao Algarve, Alexander Kristoff has been wearing an old discontinued time trial helmet...
+//""",
+//    author: "CNN Indonesia"
+//)
 
 // MARK: - Corner Radius Extension
 extension View {

@@ -11,6 +11,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     @StateObject private var newsService = NewsService()
+    @State private var searchedArticle: [Article] = []
     
     var body: some View {
     
@@ -70,7 +71,9 @@ struct HomeScreen: View {
                     ScrollView {
                         LazyVStack(spacing: 16) {
                             ForEach(newsService.articles) { article in
-                                NewsCardView(article: article)
+                                NavigationLink(destination: DetailScreen(articles: article)){
+                                    NewsCardView(article: article)
+                                }
                             }.shadow(radius: 2, x: 0, y: -2)
                         }
                         .padding(.horizontal)
