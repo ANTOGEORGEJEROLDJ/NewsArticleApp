@@ -56,19 +56,21 @@ struct DetailScreen: View {
                                 .font(.headline)
                                 .padding(.horizontal,-183)
                                 .padding(.top,-185)
-                            Text(articles.publishedAt!)
+                            Text(formattedDate(from: articles.publishedAt))
+                                .font(.caption)
                                 .foregroundColor(.gray)
-                                .padding(.horizontal,-183)
-                                .padding(.top,-160)
+                                .padding(.horizontal, -183)
+                                .padding(.top, -160)
+
                             
                             Text("Description:")
                                 .font(.headline)
                                 .padding(.horizontal,-183)
-                                .padding(.top,-125)
+                                .padding(.top,-130)
                                 
                             Text(articles.description!)
                                 .lineLimit(10)
-                                .padding(.top,-100)
+                                .padding(.top,-110)
                             
                         }
                     }
@@ -81,14 +83,35 @@ struct DetailScreen: View {
                 .padding()
             }
         }
-//        .navigationTitle("Detail")
-//        .navigationBarTitleDisplayMode(.inline)
+
         .onAppear {
             print("-----> \(articles.description ?? "No Description")")
         }
     }
     
+    /// 🔧 Helper function
+    func formattedDate(from isoString: String?) -> String {
+        guard let isoString = isoString else { return "Unknown date" }
+
+        let isoFormatter = ISO8601DateFormatter()
+        isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+
+        let fallbackFormatter = ISO8601DateFormatter() // In case without fractional seconds
+
+        let date: Date? = isoFormatter.date(from: isoString) ?? fallbackFormatter.date(from: isoString)
+
+        guard let validDate = date else { return "Invalid date" }
+
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long        // e.g., June 9, 2025
+        formatter.timeStyle = .short       // e.g., 1:45 PM
+
+        return formatter.string(from: validDate)
+    }
+    
 }
+
+
 
 
 // MARK: - Corner Radius Extension

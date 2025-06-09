@@ -9,43 +9,70 @@ import SwiftUI
 
 struct NewsCardView: View {
     let article: Article
-    
+
     var body: some View {
-        HStack(alignment: .top, spacing: 16) {
-            if let imageUrl = article.urlToImage,
-               let url = URL(string: imageUrl) {
-                AsyncImage(url: url) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: 100, height: 100)
-                            .clipped()
-                    default:
-                        ProgressView()
-                            .frame(width: 100, height: 100)
+        ZStack {
+            // Background card
+            RoundedRectangle(cornerRadius: 20)
+                .fill(
+                    LinearGradient(
+                        gradient: Gradient(colors: [.white, Color.blue.opacity(0.05)]),
+                        startPoint: .topLeading,
+                        endPoint: .bottomTrailing
+                    )
+                )
+//                .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
+                .shadow(radius: 5)
+
+            HStack(alignment: .top, spacing: 16) {
+                // 🖼 Image with fallback
+                if let imageUrl = article.urlToImage,
+                   let url = URL(string: imageUrl) {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .frame(width: 100, height: 100)
+                                .clipped()
+                                .cornerRadius(12)
+                        case .failure(_):
+                            Image(systemName: "photo.fill")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .foregroundColor(.gray)
+                        default:
+                            ProgressView()
+                                .frame(width: 100, height: 100)
+                        }
                     }
                 }
-            }
-            
-            VStack(alignment: .leading, spacing: 6) {
-                Text(article.title ?? "No Title")
-                    .font(.headline)
-                    .lineLimit(2)
-                
-                Text(article.description ?? "No Description")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .lineLimit(2)
-                
-                if let date = article.publishedAt {
-                    Text(date.prefix(10)) // Just the date part
-                        .font(.caption)
-                        .foregroundColor(.blue)
+
+                // 📰 Article details
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(article.title ?? "No Title")
+                        .font(.headline)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.primary)
+                        .lineLimit(2)
+
+
+
+                    if let date = article.publishedAt {
+                        Text(date.prefix(10)) // e.g., 2025-06-09
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                            .padding(.top, 4)
+                    }
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .padding()
         }
-        .padding(.vertical, 8)
+        .padding(.horizontal)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 6)
     }
 }

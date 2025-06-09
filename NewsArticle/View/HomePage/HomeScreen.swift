@@ -31,10 +31,17 @@ struct HomeScreen: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             Spacer()
-                            Text("View All")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(.blue)
+                            // 🔹 Category Filter
+                            Picker("Category", selection: $selectedCategory) {
+                                Text("All").tag("All")
+                                Text("Business").tag("Business")
+                                Text("Technology").tag("Technology")
+                                Text("Sports").tag("Sports")
+                                Text("Health").tag("Health")
+                                Text("Science").tag("Science")
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                            .padding(.horizontal)
                         }
                         .padding(.horizontal)
                         .padding(.top, 16)
@@ -50,9 +57,13 @@ struct HomeScreen: View {
                             }
                             .padding(.horizontal)
                         }
-
-                        // MARK: - Filters
+                        
+                        // MARK: - Recommendation Header
                         HStack {
+                            Text("Recommendation")
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Spacer()
                             // 🔹 Sort Filter
                             Picker("Sort", selection: $selectedSort) {
                                 ForEach(SortType.allCases, id: \.self) { sort in
@@ -61,33 +72,6 @@ struct HomeScreen: View {
                             }
                             .pickerStyle(MenuPickerStyle())
                             .padding(.horizontal)
-
-                            Spacer()
-
-                            // 🔹 Category Filter
-                            Picker("Category", selection: $selectedCategory) {
-                                Text("All").tag("All")
-                                Text("Business").tag("Business")
-                                Text("Technology").tag("Technology")
-                                Text("Sports").tag("Sports")
-                                Text("Health").tag("Health")
-                                Text("Science").tag("Science")
-                            }
-                            .pickerStyle(MenuPickerStyle())
-                            .padding(.horizontal)
-                        }
-                        .padding(.vertical, 4)
-                        
-                        // MARK: - Recommendation Header
-                        HStack {
-                            Text("Recommendation")
-                                .font(.title2)
-                                .fontWeight(.bold)
-                            Spacer()
-                            Text("View All")
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(.blue)
                         }
                         .padding(.horizontal)
                         
