@@ -53,7 +53,7 @@ struct SelectNewsScreen: View {
 
                     // Navigate Button
                     NavigationLink(
-                        destination: HomeScreen(topic: selectedTopic ?? "Apple News"),
+                        destination: TapView(topic: selectedTopic ?? "Apple News"),
                         isActive: $navigateToHome,
                         label: {
                             Button(action: {
@@ -72,6 +72,7 @@ struct SelectNewsScreen: View {
                                     .padding(.bottom, 10)
                             }
                         })
+
                 }
             }
             .navigationTitle("Choose Topic")

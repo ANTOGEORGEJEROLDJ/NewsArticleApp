@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TapView: View {
+    var topic: String
     @State private var selectedTab: Tab = .home
 
     var body: some View {
@@ -15,17 +16,16 @@ struct TapView: View {
             Group {
                 switch selectedTab {
                 case .home:
-                    HomeScreen(topic: "")
+                    HomeScreen(topic: topic)
                 case .search:
                     SearchScreen()
                 }
             }
 
-            // Floating Tab Bar
             FloatingTabBar(selectedTab: $selectedTab)
                 .padding(.bottom, -10)
         }
-        .background(Color.clear.ignoresSafeArea()) // Make sure background is clear
+        .background(Color.clear.ignoresSafeArea())
     }
 
     enum Tab {
