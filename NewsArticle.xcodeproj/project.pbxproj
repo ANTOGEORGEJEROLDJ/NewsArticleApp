@@ -120,8 +120,8 @@
 				4EA312122DF821C600710D6D /* SIgnInScreen */,
 				4EA312092DF7FA2900710D6D /* FirstPage */,
 				4EDF884B2DF6C14700FF44ED /* HomePage */,
-				4EA312072DF7F9D500710D6D /* SearchScreen */,
 				4EA312082DF7F9ED00710D6D /* detailScreen */,
+				4EA312072DF7F9D500710D6D /* SearchScreen */,
 			);
 			path = View;
 			sourceTree = "<group>";

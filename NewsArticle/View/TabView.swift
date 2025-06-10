@@ -24,7 +24,7 @@ struct TapView: View {
 
             FloatingTabBar(selectedTab: $selectedTab)
                 .padding(.bottom, -10)
-        }
+        }.navigationBarBackButtonHidden()
         .background(Color.clear.ignoresSafeArea())
     }
 

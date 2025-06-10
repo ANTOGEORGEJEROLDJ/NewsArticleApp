@@ -17,12 +17,12 @@ struct SIgnInScreen: View {
     @State private var navigationToSelectNewsScreen = false
     
     var body: some View {
-        NavigationView {
             ScrollView {
                 VStack {
                     Image("loginImage")
                         .resizable()
                         .scaledToFill()
+                    
                         .frame(width: 175, height: 175)
                         .padding(.top)
                     Text("Login to continue")
@@ -30,6 +30,8 @@ struct SIgnInScreen: View {
                         .font(.headline)
                         .foregroundColor(.black.opacity(0.5))
                 }
+                .padding(.top)
+                
                 Group {
                     VStack(spacing: 20) {
                         CustomTextField(icon: "person.fill", placeHolder: "UserName", text: $UserName)
@@ -106,7 +108,7 @@ struct SIgnInScreen: View {
                 }
                 .padding(.top, 50)
             }
-        }
+    
     }
 }
 

@@ -20,10 +20,12 @@ struct TopNewsCard: View {
                         .aspectRatio(contentMode: .fill)
                 } else {
                     Rectangle()
-                        .fill(Color.gray.opacity(0.3))
+                        .fill(Color.white.opacity(0.3))
+                        
                 }
             }
-            .frame(width: 340, height: 195)
+            .frame(width: 350, height: 220)
+            .background(.ultraThinMaterial)
             .clipped()
             .cornerRadius(16)
             .shadow(radius: 4)
@@ -39,10 +41,10 @@ struct TopNewsCard: View {
                     .padding(.top, 100)
             }
             .padding()
-            .background(LinearGradient(colors: [.black.opacity(0.5), .clear], startPoint: .bottom, endPoint: .top))
+//            .background(LinearGradient(colors: [.black.opacity(0.5), .clear], startPoint: .bottom, endPoint: .top))
             .cornerRadius(16)
         }
-        .frame(width: 340)
+        .frame(width: 350)
         .padding(.vertical)
     }
 }

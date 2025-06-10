@@ -10,14 +10,38 @@ import SwiftUI
 struct DetailScreen: View {
     
     let articles: Article
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         ZStack {
             Color(UIColor.systemBackground)
                 .ignoresSafeArea()
-            
+
             ScrollView {
                 VStack(spacing: 20) {
+                    
+                    HStack {
+                        Button(action: {
+                            dismiss()  // Navigate back to the previous screen
+                        }) {
+                            Image("back")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 45, height: 45)
+                                .cornerRadius(15)
+                        }
+                        .padding(.leading, 20)
+                        
+                        Text("Detail page")
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 50)
+                            
+                        
+                        Spacer()
+                    }.padding()
+                    .padding(.top, -20)
+                    
                     
                     // 🔷 Image with title overlay
                     ZStack(alignment: .bottomLeading) {
@@ -46,8 +70,8 @@ struct DetailScreen: View {
                             .cornerRadius(10)
                             .padding(.bottom,1)
                             .padding(.leading,20)
-                            
-                    }
+                        
+                    }.padding(.top, -20)
                     
                     // 🔷 Article metadata and description
                     VStack( spacing: 12) {
@@ -64,15 +88,15 @@ struct DetailScreen: View {
                                 .padding(.horizontal, -183)
                                 .padding(.top, -160)
                                 .padding()
-
+                            
                             
                             Text("Description:")
                                 .font(.headline)
                                 .padding(.horizontal,-183)
                                 .padding(.top,-130)
                                 .padding()
-                                
-                            Text(articles.description!)
+                            
+                            Text(articles.description ?? "")
                                 .lineLimit(10)
                                 .padding(.top,-110)
                                 .padding()
@@ -87,7 +111,8 @@ struct DetailScreen: View {
                 }
                 .padding()
             }
-        }
+        
+        }.navigationBarBackButtonHidden()
 
         .onAppear {
             print("-----> \(articles.description ?? "No Description")")
