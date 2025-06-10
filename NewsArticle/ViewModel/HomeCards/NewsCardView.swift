@@ -14,9 +14,10 @@ struct NewsCardView: View {
         ZStack {
             // Background card
             RoundedRectangle(cornerRadius: 20)
-                .fill(Color(UIColor.secondarySystemBackground))
-//                .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
-                .shadow(radius: 5)
+                .fill(Color(UIColor.white).opacity(0.8))
+            
+                
+              
 
             HStack(alignment: .top, spacing: 16) {
                 // 🖼 Image with fallback
@@ -68,5 +69,9 @@ struct NewsCardView: View {
         .padding(.horizontal)
         .frame(maxWidth: .infinity)
         .padding(.vertical, 6)
+//        .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 4)
+        .background(.white.opacity(0.8))
+        
+//        .shadow(radius: 5)
     }
 }

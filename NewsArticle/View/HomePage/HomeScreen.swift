@@ -1,12 +1,3 @@
-//
-//  ContentView.swift
-//  NewsArticle
-//
-//  Created by Paranjothi iOS MacBook Pro on 09/06/25.
-//
-
-
-
 import SwiftUI
 
 struct HomeScreen: View {
@@ -16,85 +7,105 @@ struct HomeScreen: View {
     @State private var selectedCategory: String = "All"
     @Environment(\.dismiss) private var dismiss
 
-
     var body: some View {
         NavigationView {
             ZStack {
-                Color(UIColor.systemGroupedBackground).ignoresSafeArea()
-
-                ScrollView {
-                    
-                    HStack {
-                        Button(action: {
-                            dismiss()  // Navigate back to the previous screen
-                        }) {
-                            Image("back")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 45, height: 45)
-                                .cornerRadius(15)
-                        }
-                        .padding(.leading, 20)
+                LinearGradient(gradient: Gradient(colors: [.white.opacity(0.2), .white]),
+                               startPoint: .top,
+                               endPoint: .bottom)
+                .ignoresSafeArea()
+                
+                ScrollView(showsIndicators: false) {
+                    VStack(spacing: 20) {
                         
-                        Text("Daily News")
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.horizontal, 60)
+                        // Header
+                        HStack {
+                            Button(action: {
+                                dismiss()
+                            }) {
+                                Image("back")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 45, height: 45)
+                                    .cornerRadius(15)
+                                
+                            }
                             
+                            Spacer()
+                            
+                            Text("📰 Daily News")
+                                .font(.system(size: 24, weight: .bold, design: .rounded))
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                            
+                            Image(systemName: "person.circle.fill")
+                                .font(.largeTitle)
+                                .foregroundColor(.gray.opacity(0.7))
+                        }
+                        .padding(.horizontal)
                         
-                        Spacer()
-                    }
-                    .padding(.top, 20)
-                    
-                    VStack(alignment: .leading, spacing: 16) {
-                        HStack {
+                        // Section: Breaking News
+                        VStack(alignment: .leading, spacing: 10) {
                             Text("Breaking News")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            Spacer()
-                        }
-                        .padding(.horizontal)
-                        .padding(.top, 16)
-
-                        if !newsService.articles.isEmpty {
-                            TopNewsCarouselView(articles: Array(newsService.articles.prefix(5)))
-                        }
-
-                        HStack {
-                            Text("Recommendation")
-                                .font(.title2)
-                                .fontWeight(.bold)
-
-                            Spacer()
-
-                            Picker("Sort", selection: $selectedSort) {
-                                ForEach(SortType.allCases, id: \.self) {
-                                    Text($0.rawValue)
-                                }
-                            }
-                            .pickerStyle(MenuPickerStyle())
-                        }
-                        .padding(.horizontal)
-
-                        LazyVStack(spacing: 20) {
-                            ForEach(filteredArticles) { article in
-                                NavigationLink(destination: DetailScreen(articles: article)) {
-                                    NewsCardView(article: article)
-                                        .padding(.horizontal)
-                                }
+                                .font(.title3)
+                                .bold()
+                                .padding(.horizontal)
+                            
+                            if !newsService.articles.isEmpty {
+                                TopNewsCarouselView(articles: Array(newsService.articles.prefix(5)))
+                                    .transition(.slide)
                             }
                         }
-                        .padding(.top)
-                    } .padding(.top, -15)
+                        
+                        // Section: Sort & Recommend
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Text("Recommendations")
+                                    .font(.title3)
+                                    .bold()
+                                
+                                Spacer()
+                                
+                                Picker("Sort", selection: $selectedSort) {
+                                    ForEach(SortType.allCases, id: \.self) {
+                                        Text($0.rawValue)
+                                    }
+                                }
+                                .pickerStyle(.menu)
+                                .padding(.trailing)
+                            }
+                            .padding(.horizontal)
+                            
+                            LazyVStack(spacing: 16) {
+                                ForEach(filteredArticles) { article in
+                                    NavigationLink(destination: DetailScreen(articles: article)) {
+                                        NewsCardView(article: article)
+                                            .background(.ultraThinMaterial)
+                                            .cornerRadius(20)
+                                            .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
+                                            .padding(.horizontal)
+                                        
+                                    }
+                                    .transition(.opacity)
+                                }
+                            }
+                        }
+                        
+                        Spacer(minLength: 40)
+                    }
+                    .padding(.top, 10)
+                    
                 }
                 .onAppear {
                     newsService.fetchArticles(for: topic)
                 }
             }
             .navigationBarHidden(true)
-        }.navigationBarBackButtonHidden()
+        }
+        .navigationBarBackButtonHidden()
     }
-
+    
     var filteredArticles: [Article] {
         var filtered = newsService.articles
         if selectedCategory != "All" {
@@ -109,8 +120,6 @@ struct HomeScreen: View {
         return filtered
     }
 }
-
-
 
 enum SortType: String, CaseIterable {
     case newest = "Newest"
