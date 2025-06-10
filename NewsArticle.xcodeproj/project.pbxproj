@@ -16,6 +16,8 @@
 		4E021AEE2DF7354F005C5D32 /* TopNewsCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E021AED2DF7354F005C5D32 /* TopNewsCarouselView.swift */; };
 		4EA312062DF7F9CD00710D6D /* SelectNewsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA312052DF7F9CD00710D6D /* SelectNewsScreen.swift */; };
 		4EA3120B2DF7FEE700710D6D /* APIselectedCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA3120A2DF7FEE700710D6D /* APIselectedCard.swift */; };
+		4EA312142DF821ED00710D6D /* SIgnInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA312132DF821ED00710D6D /* SIgnInScreen.swift */; };
+		4EA312222DF827F200710D6D /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EA312212DF827F200710D6D /* CustomTextField.swift */; };
 		4EDF88422DF6B9FB00FF44ED /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4EDF883E2DF6B9FB00FF44ED /* Assets.xcassets */; };
 		4EDF88432DF6B9FB00FF44ED /* APImodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDF883B2DF6B9FB00FF44ED /* APImodel.swift */; };
 		4EDF88442DF6B9FB00FF44ED /* NewsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EDF883C2DF6B9FB00FF44ED /* NewsService.swift */; };
@@ -51,6 +53,8 @@
 		4E021AED2DF7354F005C5D32 /* TopNewsCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopNewsCarouselView.swift; sourceTree = "<group>"; };
 		4EA312052DF7F9CD00710D6D /* SelectNewsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectNewsScreen.swift; sourceTree = "<group>"; };
 		4EA3120A2DF7FEE700710D6D /* APIselectedCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIselectedCard.swift; sourceTree = "<group>"; };
+		4EA312132DF821ED00710D6D /* SIgnInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SIgnInScreen.swift; sourceTree = "<group>"; };
+		4EA312212DF827F200710D6D /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		4EDF87EE2DF6B3BD00FF44ED /* NewsArticle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsArticle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EDF87FB2DF6B3C100FF44ED /* NewsArticleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsArticleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EDF88052DF6B3C100FF44ED /* NewsArticleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsArticleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				4E021ACD2DF6FDDD005C5D32 /* TabView.swift */,
+				4EA312122DF821C600710D6D /* SIgnInScreen */,
 				4EA312092DF7FA2900710D6D /* FirstPage */,
 				4EDF884B2DF6C14700FF44ED /* HomePage */,
 				4EA312072DF7F9D500710D6D /* SearchScreen */,
@@ -144,6 +149,15 @@
 				4EA3120A2DF7FEE700710D6D /* APIselectedCard.swift */,
 			);
 			path = FirstPage;
+			sourceTree = "<group>";
+		};
+		4EA312122DF821C600710D6D /* SIgnInScreen */ = {
+			isa = PBXGroup;
+			children = (
+				4EA312132DF821ED00710D6D /* SIgnInScreen.swift */,
+				4EA312212DF827F200710D6D /* CustomTextField.swift */,
+			);
+			path = SIgnInScreen;
 			sourceTree = "<group>";
 		};
 		4EDF87E52DF6B3BD00FF44ED = {
@@ -360,6 +374,7 @@
 				4E021AEC2DF73433005C5D32 /* String.swift in Sources */,
 				4EDF88432DF6B9FB00FF44ED /* APImodel.swift in Sources */,
 				4E021AD62DF70808005C5D32 /* LoadingView.swift in Sources */,
+				4EA312222DF827F200710D6D /* CustomTextField.swift in Sources */,
 				4E021ACA2DF6F70E005C5D32 /* SearchScreen.swift in Sources */,
 				4EDF88442DF6B9FB00FF44ED /* NewsService.swift in Sources */,
 				4EDF88452DF6B9FB00FF44ED /* HomeScreen.swift in Sources */,
@@ -367,6 +382,7 @@
 				4EDF88462DF6B9FB00FF44ED /* NewsArticleApp.swift in Sources */,
 				4E021AEE2DF7354F005C5D32 /* TopNewsCarouselView.swift in Sources */,
 				4EA312062DF7F9CD00710D6D /* SelectNewsScreen.swift in Sources */,
+				4EA312142DF821ED00710D6D /* SIgnInScreen.swift in Sources */,
 				4EA3120B2DF7FEE700710D6D /* APIselectedCard.swift in Sources */,
 				4E021AE42DF72099005C5D32 /* TopNewsCard.swift in Sources */,
 				4E021ACE2DF6FDDD005C5D32 /* TabView.swift in Sources */,
