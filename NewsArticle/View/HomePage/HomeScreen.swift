@@ -2,6 +2,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     var topic: String
+    @Binding var isSignedIn: Bool
     @StateObject private var newsService = NewsService()
     @State private var selectedSort: SortType = .newest
     @State private var selectedCategory: String = "All"
@@ -38,10 +39,11 @@ struct HomeScreen: View {
                                 .foregroundColor(.primary)
                             
                             Spacer()
-                            
-                            Image(systemName: "person.circle.fill")
-                                .font(.largeTitle)
-                                .foregroundColor(.gray.opacity(0.7))
+                            NavigationLink(destination: ProfileScreen(username: "", email: "", isSignedIn: $isSignedIn)) {
+                                Image(systemName: "person.circle.fill")
+                                    .font(.largeTitle)
+                                    .foregroundColor(.gray.opacity(0.7))
+                            }
                         }
                         .padding(.horizontal)
                         

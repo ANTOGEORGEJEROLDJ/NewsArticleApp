@@ -16,7 +16,7 @@ struct DetailScreen: View {
         ZStack {
             Color(UIColor.systemBackground)
                 .ignoresSafeArea()
-
+    
             ScrollView {
                 VStack(spacing: 20) {
                     
@@ -30,46 +30,48 @@ struct DetailScreen: View {
                                 .frame(width: 45, height: 45)
                                 .cornerRadius(15)
                         }
-                        .padding(.leading, 30)
+                        .padding(.leading, 17)
                         
                         Text("Detail page")
                             .font(.title2)
                             .fontWeight(.bold)
-                            .padding(.horizontal, 50)
+                            .padding(.horizontal, 60)
                             
                         
                         Spacer()
                     }.padding()
                     .padding(.top, -20)
+                    .background(Color.clear)
                     
                     
                     // 🔷 Image with title overlay
-                    ZStack(alignment: .bottomLeading) {
+                    ZStack(alignment: .bottom) {
                         AsyncImage(url: URL(string: articles.urlToImage ?? "")) { phase in
                             if let image = phase.image {
                                 image
                                     .resizable()
-                                    .frame(width: 450, height: 400)
+                                    .frame(width: 380, height: 350)
                                     .cornerRadius(30, corners: [.bottomLeft, .bottomRight])
-                                    .shadow(radius: 10)
+//                                    .shadow(radius: 10)
                                     .aspectRatio(contentMode: .fill)
                             } else {
                                 Color.gray.opacity(0.2)
                             }
                         }
-                        .frame(height: 400)
-                        .frame(maxWidth: .infinity)
+//                        .frame(height: 400)
+//                        .frame(maxWidth: .infinity)
                         .clipped()
-                        .cornerRadius(20)
+//                        .cornerRadius(20)
                         
                         Text(articles.title)
-                            .font(.subheadline)
+                            
+                            .font(.system(size:10))
                             .bold()
                             .foregroundColor(.white)
                             .padding()
                             .cornerRadius(10)
                             .padding(.bottom,1)
-                            .padding(.leading,20)
+                            .padding(.leading,10)
                         
                     }.padding(.top, -20)
                     
@@ -80,12 +82,12 @@ struct DetailScreen: View {
                             Text("Published At:")
                                 .font(.headline)
                                 .padding(.horizontal,-183)
-                                .padding(.top,-185)
-                                .padding(.leading, 20)
+                                .padding(.top,-165)
+//                                .padding(.leading, 20)
                             Text(formattedDate(from: articles.publishedAt))
                                 .font(.caption)
                                 .foregroundColor(.gray)
-                                .padding(.horizontal, -183)
+                                .padding(.horizontal, -160)
                                 .padding(.top, -160)
                                 .padding()
                             
@@ -93,19 +95,19 @@ struct DetailScreen: View {
                             Text("Description:")
                                 .font(.headline)
                                 .padding(.horizontal,-183)
-                                .padding(.top,-130)
+                                .padding(.top,-150)
                                 .padding()
                             
                             Text(articles.description ?? "")
                                 .lineLimit(10)
-                                .padding(.top,-110)
+                                .padding(.top,-150)
                                 .padding()
                             
                         }
                     }
                     .padding()
                     .frame(width: 400,height: 500)
-                    .background(Color(UIColor.secondarySystemBackground))
+                    .background(Color.white)
                     .cornerRadius(12)
                     
                 }

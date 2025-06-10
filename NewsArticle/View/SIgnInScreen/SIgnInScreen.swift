@@ -50,7 +50,7 @@ struct SIgnInScreen: View {
                 VStack(spacing: 20) {
                     // NavigationLink to TabView
                     NavigationLink(
-                        destination: SelectNewsScreen()
+                        destination: SelectNewsScreen(username: "", email: "")
                             .environment(\.managedObjectContext, viewContext),
                         isActive: $navigationToSelectNewsScreen
                     ) {
