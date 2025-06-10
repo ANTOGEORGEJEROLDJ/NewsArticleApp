@@ -17,7 +17,7 @@ struct CustomTextField: View {
         HStack{
             Image(systemName: icon)
                 .resizable()
-                .frame(width: 30)
+                .frame(width: 20,height: 23)
             if placeHolder.lowercased().contains("password") {
                 SecureField(placeHolder, text: $text)
             } else {

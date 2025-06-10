@@ -39,9 +39,9 @@ struct SIgnInScreen: View {
                         CustomTextField(icon: "lock.fill", placeHolder: "Password", text: $password)
                     }
                     .padding()
-                    .background(Color.white.opacity(0.9))
+                    .background(.ultraThinMaterial)
                     .cornerRadius(20)
-                    .shadow(radius: 10)
+                    .shadow(radius: 2)
                     .padding(.horizontal)
                     .padding(.top, 20)
                 }
@@ -65,12 +65,13 @@ struct SIgnInScreen: View {
                             .frame(width: 258, height: 22)
                             .padding()
                             .bold()
-                            .background(Color.blue.opacity(0.2))
+                            .background(Color.orange.opacity(0.4))
                             .foregroundColor(.black.opacity(0.7))
                             .font(.headline)
                             .cornerRadius(15)
                             .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
                     }
+                    .padding(.top, -30)
                     
                     HStack(spacing: 20) {
                         Button(action: {
@@ -84,7 +85,7 @@ struct SIgnInScreen: View {
                         .frame(width: 70, height: 22)
                         .padding()
                         .foregroundColor(.white)
-                        .background(Color.blue.opacity(0.1))
+                        .background(Color.orange.opacity(0.3))
                         .font(.headline)
                         .cornerRadius(15)
                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
@@ -99,8 +100,8 @@ struct SIgnInScreen: View {
                         }
                         .frame(width: 70, height: 22)
                         .padding()
-                        .foregroundColor(.white)
-                        .background(Color.blue.opacity(0.1))
+                        .foregroundColor(.orange)
+                        .background(Color.orange.opacity(0.3))
                         .font(.headline)
                         .cornerRadius(15)
                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)

@@ -58,7 +58,7 @@ struct SelectNewsScreen: View {
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 19)
                                             .stroke(selectedTopic == item.0 ? Color.orange : Color.clear, lineWidth: 3)
-                                            .frame(width: 370)
+                                            .frame(width: 345)
                                     )
                             }
                         }

@@ -30,7 +30,7 @@ struct DetailScreen: View {
                                 .frame(width: 45, height: 45)
                                 .cornerRadius(15)
                         }
-                        .padding(.leading, 20)
+                        .padding(.leading, 30)
                         
                         Text("Detail page")
                             .font(.title2)
