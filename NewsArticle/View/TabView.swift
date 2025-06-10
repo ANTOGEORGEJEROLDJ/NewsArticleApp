@@ -15,7 +15,7 @@ struct TapView: View {
             Group {
                 switch selectedTab {
                 case .home:
-                    HomeScreen()
+                    HomeScreen(topic: "")
                 case .search:
                     SearchScreen()
                 }
@@ -23,7 +23,7 @@ struct TapView: View {
 
             // Floating Tab Bar
             FloatingTabBar(selectedTab: $selectedTab)
-                .padding(.bottom, -20)
+                .padding(.bottom, -10)
         }
         .background(Color.clear.ignoresSafeArea()) // Make sure background is clear
     }

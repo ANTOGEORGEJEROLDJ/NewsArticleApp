@@ -9,12 +9,28 @@ import Foundation
 
 class NewsService: ObservableObject {
     @Published var articles: [Article] = []
-    
-    func fetchArticles() {
-        let urlString = "https://newsapi.org/v2/everything?q=tesla&from=2025-05-09&sortBy=publishedAt&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+
+    func fetchArticles(for topic: String) {
+        var urlString = ""
+
+        switch topic {
+        case "Apple News":
+            urlString = "https://newsapi.org/v2/everything?q=apple&from=2025-06-09&to=2025-06-09&sortBy=popularity&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+        case "Tesla News":
+            urlString = "https://newsapi.org/v2/everything?q=tesla&from=2025-05-10&sortBy=publishedAt&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+        case "Business News":
+            urlString = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+        case "TechCrunch":
+            urlString = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+        case "Wall Street Journal":
+            urlString = "https://newsapi.org/v2/everything?domains=wsj.com&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+        default:
+            urlString = "https://newsapi.org/v2/everything?q=apple&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+        }
+
         guard let url = URL(string: urlString) else { return }
-        
-        URLSession.shared.dataTask(with: url) { data, _, error in
+
+        URLSession.shared.dataTask(with: url) { data, _, _ in
             if let data = data {
                 do {
                     let decoded = try JSONDecoder().decode(NewsResponse.self, from: data)
@@ -27,6 +43,7 @@ class NewsService: ObservableObject {
             }
         }.resume()
     }
+
     
     func searchArticles(query: String, completion: @escaping (Result<[Article], Error>) -> Void) {
         let apiKey = "cc25bb5dcf664f72b46179809c871f6e"

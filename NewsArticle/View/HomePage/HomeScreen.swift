@@ -11,62 +11,54 @@ import SwiftUI
 
 struct HomeScreen: View {
     @StateObject private var newsService = NewsService()
-    
     @State private var selectedSort: SortType = .newest
     @State private var selectedCategory: String = "All"
+
+    let topic: String
 
     var body: some View {
         NavigationView {
             ZStack {
-                Color(UIColor.systemGroupedBackground)
-                    .ignoresSafeArea()
+                Color(UIColor.systemGroupedBackground).ignoresSafeArea()
                 ScrollView {
                     VStack(alignment: .leading, spacing: 16) {
-                        
-                        // MARK: - Header
+                        // Header
                         HStack {
                             Text("Breaking News")
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            
+
                             Spacer()
-                            
+
                             Picker("Category", selection: $selectedCategory) {
                                 Text("All").tag("All")
                                 Text("Business").tag("Business")
                                 Text("Technology").tag("Technology")
-                                Text("Sports").tag("Sports")
-                                Text("Health").tag("Health")
-                                Text("Science").tag("Science")
                             }
                             .pickerStyle(MenuPickerStyle())
                         }
                         .padding(.horizontal)
                         .padding(.top, 16)
-                        
-                        // MARK: - Top News Carousel with Page Indicator
+
+                        // Carousel
                         if !newsService.articles.isEmpty {
                             TopNewsCarouselView(articles: Array(newsService.articles.prefix(5)))
                         }
 
-                        // MARK: - Recommendation Header
+                        // Recommendations
                         HStack {
                             Text("Recommendation")
                                 .font(.title2)
                                 .fontWeight(.bold)
-                            
                             Spacer()
-                            
                             Picker("Sort", selection: $selectedSort) {
-                                ForEach(SortType.allCases, id: \.self) { sort in
-                                    Text(sort.rawValue)
+                                ForEach(SortType.allCases, id: \.self) {
+                                    Text($0.rawValue)
                                 }
-                            }
-                            .pickerStyle(MenuPickerStyle())
-                        }
-                        .padding(.horizontal)
+                            }.pickerStyle(MenuPickerStyle())
+                        }.padding(.horizontal)
 
-                        // MARK: - Filtered News List
+                        // Articles
                         LazyVStack(spacing: 20) {
                             ForEach(filteredArticles) { article in
                                 NavigationLink(destination: DetailScreen(articles: article)) {
@@ -79,13 +71,13 @@ struct HomeScreen: View {
                     }
                 }
                 .onAppear {
-                    newsService.fetchArticles()
+                    newsService.fetchArticles(for: topic)
                 }
             }
             .navigationBarHidden(true)
         }
     }
-    
+
     var filteredArticles: [Article] {
         var filtered = newsService.articles
 
@@ -105,6 +97,7 @@ struct HomeScreen: View {
         return filtered
     }
 }
+
 
 enum SortType: String, CaseIterable {
     case newest = "Newest"

@@ -29,10 +29,6 @@ struct TopNewsCard: View {
             .shadow(radius: 4)
 
             VStack(alignment: .leading) {
-                //                Text(article.title ?? "Unknown")
-                //                    .font(.caption)
-                //                    .bold()
-                //                    .foregroundColor(.white.opacity(0.9))
                 
                 Text(article.title)
                     .font(.system(size: 15))
