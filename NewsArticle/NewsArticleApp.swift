@@ -31,6 +31,7 @@ struct NewsArticleApp: App {
             NavigationView {
 //                HomeScreen(topic: "", isSignedIn: $isSignedIn) // ✅ Pass Binding
                 SelectNewsScreen(username: "", email: "")
+//                SIgnInScreen()
             }
             .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }

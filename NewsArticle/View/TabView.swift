@@ -61,6 +61,7 @@ struct FloatingTabBar: View {
         }
         .padding(.vertical, 12)
         .padding(.horizontal, 20)
+        .frame(width: 300)
         .background(
             Color(UIColor.systemBackground).opacity(0.95)
                 .clipShape(Capsule())
@@ -97,6 +98,7 @@ struct TabBarButton: View {
                 .scaleEffect(selectedTab == tab ? 1.1 : 1.0)
                 
         }
+        .frame(width: 25)
     }
 }
 
