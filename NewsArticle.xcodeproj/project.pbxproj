@@ -95,6 +95,7 @@
 		4EA312292DF8768B00710D6D /* ProfilePage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilePage.swift; sourceTree = "<group>"; };
 		4EA312722DF9667200710D6D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4EA312742DF966B300710D6D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		4EA312752DF96BE200710D6D /* NewsArticle.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NewsArticle.entitlements; sourceTree = "<group>"; };
 		4EDF87EE2DF6B3BD00FF44ED /* NewsArticle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NewsArticle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EDF87FB2DF6B3C100FF44ED /* NewsArticleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsArticleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4EDF88052DF6B3C100FF44ED /* NewsArticleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NewsArticleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -281,6 +282,7 @@
 		4EDF88412DF6B9FB00FF44ED /* NewsArticle */ = {
 			isa = PBXGroup;
 			children = (
+				4EA312752DF96BE200710D6D /* NewsArticle.entitlements */,
 				4EA312742DF966B300710D6D /* Info.plist */,
 				4EDF88402DF6B9FB00FF44ED /* NewsArticleApp.swift */,
 				4EDF883D2DF6B9FB00FF44ED /* API model */,
@@ -755,6 +757,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NewsArticle/NewsArticle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H2C4R2VE3A;
@@ -786,6 +789,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NewsArticle/NewsArticle.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = H2C4R2VE3A;

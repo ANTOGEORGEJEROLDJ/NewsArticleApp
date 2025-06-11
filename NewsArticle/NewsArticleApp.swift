@@ -24,7 +24,7 @@ struct NewsArticleApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationView {
-                SIgnInScreen()
+                SelectNewsScreen(username: "", email: "")
             }
         }
     }
