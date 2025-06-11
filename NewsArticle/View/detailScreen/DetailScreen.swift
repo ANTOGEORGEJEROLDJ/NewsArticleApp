@@ -12,22 +12,24 @@ struct DetailScreen: View {
     let articles: Article
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) private var viewContext
-
     
+    // New callback to delete from parent
+    var onDelete: (() -> Void)?
+
+    @State private var showDeleteAlert = false
+
     var body: some View {
         ZStack {
-            Color(UIColor.systemBackground)
-                .ignoresSafeArea()
-    
+            Color(UIColor.systemBackground).ignoresSafeArea()
             ScrollView {
                 VStack(spacing: 20) {
+                    // Back & Header
                     HStack {
                         Button(action: {
-                            dismiss()  // Navigate back to the previous screen
+                            dismiss()
                         }) {
                             Image("back")
                                 .resizable()
-                                .scaledToFit()
                                 .frame(width: 45, height: 45)
                                 .cornerRadius(15)
                         }
@@ -37,14 +39,11 @@ struct DetailScreen: View {
                             .font(.title2)
                             .fontWeight(.bold)
                             .padding(.horizontal, 60)
-                            
                         Spacer()
                     }
-                    .padding()
                     .padding(.top, -20)
-                    .background(Color.clear)
-                    
-                    // 🔷 Image with title overlay
+
+                    // News Image
                     ZStack(alignment: .bottom) {
                         AsyncImage(url: URL(string: articles.urlToImage ?? "")) { phase in
                             if let image = phase.image {
@@ -52,73 +51,70 @@ struct DetailScreen: View {
                                     .resizable()
                                     .frame(width: 410, height: 300)
                                     .cornerRadius(60, corners: [.bottomLeft, .bottomRight])
-                                    .aspectRatio(contentMode: .fill)
                             } else {
                                 Color.gray.opacity(0.2)
                             }
                         }
-                        .clipped()
-                        
                         Text(articles.title)
                             .font(.system(size: 10))
                             .bold()
                             .foregroundColor(.white)
                             .padding()
-                            .cornerRadius(10)
-                            .padding(.bottom, 1)
-                            .padding(.leading, 10)
                     }
-                    .padding(.top, -20)
-                    
-                    HStack {
-                        Spacer()
-                        Image("saveIcon")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 45, height: 45)
-                            .cornerRadius(15)
-                            .onTapGesture {
-                                saveArticles()
-                            }
 
-                        
-                        Image("shareIcon")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 42, height: 45)
-                            .cornerRadius(15)
-                            .padding(.trailing, 40)
-                        
-                    }.padding(.top, -45)
-                    
-                    // 🔷 Article metadata and description
-                    VStack(spacing: 12) {
-                        Group {
-                            Text("Published At:")
-                                .font(.headline)
-                                .padding(.horizontal, -183)
-                                .padding(.top, -165)
-                            Text(formattedDate(from: articles.publishedAt))
-                                .font(.caption)
-                                .foregroundColor(.gray)
-                                .padding(.horizontal, -160)
-                                .padding(.top, -160)
-                                .padding()
-                            
-                            Text("Description:")
-                                .font(.headline)
-                                .padding(.horizontal, -183)
-                                .padding(.top, -150)
-                                .padding()
-                            
-                            Text(articles.description ?? "")
-                                .lineLimit(10)
-                                .padding(.top, -150)
+                    // Save, Share & Delete
+                    HStack {
+                                                
+                        Button(action: {
+                            showDeleteAlert = true
+                        }) {
+                            Image(systemName: "trash")
+                                .font(.title)
+                                .foregroundColor(.red)
                                 .padding()
                         }
+                        .alert("Delete this article?", isPresented: $showDeleteAlert) {
+                            Button("Delete", role: .destructive) {
+                                onDelete?()
+                                dismiss()
+                            }
+                            Button("Cancel", role: .cancel) {}
+                        }.padding(.leading, 10)
+                        
+                        
+                        
+                        Spacer()
+
+                        
+                        Image("saveIcon")
+                            .resizable()
+                            .frame(width: 45, height: 45)
+                            .onTapGesture { saveArticles() }
+
+                        Image("shareIcon")
+                            .resizable()
+                            .frame(width: 42, height: 45)
+                            .padding(.trailing, 20)
+
+                    
+                    }
+
+                    // Article Metadata
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text("Published At:")
+                            .font(.headline)
+                        Text(formattedDate(from: articles.publishedAt))
+                            .font(.caption)
+                            .foregroundColor(.gray)
+
+                        Text("Description:")
+                            .font(.headline)
+                            .padding(.top, 10)
+                        
+                        Text(articles.description ?? "")
+                            .lineLimit(10)
                     }
                     .padding()
-                    .frame(width: 400, height: 400)
                     .background(Color.white)
                     .cornerRadius(12)
                 }
@@ -126,31 +122,21 @@ struct DetailScreen: View {
             }
         }
         .navigationBarBackButtonHidden()
-        .onAppear {
-            print("-----> \(articles.description ?? "No Description")")
-        }
     }
-    
-    /// 🔧 Helper function
+
     func formattedDate(from isoString: String?) -> String {
         guard let isoString = isoString else { return "Unknown date" }
-
         let isoFormatter = ISO8601DateFormatter()
         isoFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-
         let fallbackFormatter = ISO8601DateFormatter()
-
-        let date: Date? = isoFormatter.date(from: isoString) ?? fallbackFormatter.date(from: isoString)
-
+        let date = isoFormatter.date(from: isoString) ?? fallbackFormatter.date(from: isoString)
         guard let validDate = date else { return "Invalid date" }
-
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .short
-
         return formatter.string(from: validDate)
     }
-    
+
     func saveArticles() {
         let savedArticle = SaveData(context: viewContext)
         savedArticle.title = articles.title ?? "No Title"
@@ -162,15 +148,11 @@ struct DetailScreen: View {
             try viewContext.save()
             print("✅ Article saved")
         } catch {
-            let nsError = error as NSError
-            print("❌ Failed to save: \(nsError), \(nsError.userInfo)")
+            print("❌ Failed to save: \(error)")
         }
     }
-
-
-
-
 }
+
 
 // MARK: - Corner Radius Extension
 extension View {

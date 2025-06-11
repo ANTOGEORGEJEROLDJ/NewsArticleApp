@@ -12,8 +12,10 @@ struct NewsResponse: Codable {
     let articles: [Article]
 }
 
-struct Article: Codable, Identifiable {
-    let id = UUID()
+struct Article: Codable, Identifiable, Equatable {
+    // Stable ID based on title + publishedAt
+    var id: String { title + (publishedAt ?? "") }
+
     let title: String
     let urlToImage: String?
     let publishedAt: String?
@@ -23,10 +25,12 @@ struct Article: Codable, Identifiable {
     private enum CodingKeys: String, CodingKey {
         case title, description, urlToImage, publishedAt, author
     }
+
+    static func == (lhs: Article, rhs: Article) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
-
-
 struct Source: Codable {
-let name: String?
+    let name: String?
 }
