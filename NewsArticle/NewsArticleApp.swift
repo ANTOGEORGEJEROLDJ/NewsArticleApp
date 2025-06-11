@@ -36,7 +36,7 @@ struct PersistenceController {
     let container: NSPersistentContainer
     
     init() {
-        container = NSPersistentContainer(name: "CoreData") // Must match your .xcdatamodeld file
+        container = NSPersistentContainer(name: "Model") // Must match your .xcdatamodeld file
         
         // Enable automatic migration
         let description = container.persistentStoreDescriptions.first

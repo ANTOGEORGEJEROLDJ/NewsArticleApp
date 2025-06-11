@@ -103,8 +103,8 @@ struct NewsCardView: View {
         .shadow(color: .gray.opacity(0.3), radius: 5, x: 0, y: 3)
 
         // Optional: Show comment screen on tap
-//        .sheet(isPresented: $showComments) {
-//            CommentScreen(article: article) // You'll need to create this
-//        }
+        .sheet(isPresented: $showComments) {
+            CommentScreen(article: article) // You'll need to create this
+        }
     }
 }
