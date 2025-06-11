@@ -14,11 +14,12 @@ struct CommentScreen: View {
     @FetchRequest var comments: FetchedResults<Comment>
     
     @State private var newComment = ""
+    @FocusState private var isInputActive: Bool
 
     init(article: Article) {
         self.article = article
         _comments = FetchRequest<Comment>(
-            sortDescriptors: [NSSortDescriptor(keyPath: \Comment.timestamp, ascending: false)],
+            sortDescriptors: [NSSortDescriptor(keyPath: \Comment.timestamp, ascending: true)],
             predicate: NSPredicate(format: "articleURL == %@", article.urlToImage ?? "")
         )
     }
@@ -26,8 +27,8 @@ struct CommentScreen: View {
     var body: some View {
         VStack(spacing: 0) {
             Capsule()
-                .frame(width: 40, height: 6)
-                .foregroundColor(.gray.opacity(0.4))
+                .frame(width: 40, height: 5)
+                .foregroundColor(.gray.opacity(0.3))
                 .padding(.top, 8)
 
             Text("Comments")
@@ -36,62 +37,86 @@ struct CommentScreen: View {
 
             Divider()
 
-            ScrollView {
-                VStack(spacing: 12) {
-                    ForEach(comments) { comment in
-                        HStack(alignment: .top) {
-                            Image(systemName: "person.crop.circle.fill")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.gray)
-
-                            VStack(alignment: .leading, spacing: 4) {
-                                Text(comment.text ?? "")
-                                    .font(.body)
-
-                                Text(comment.timestamp ?? Date(), style: .time)
-                                    .font(.caption)
+            ScrollViewReader { proxy in
+                ScrollView {
+                    LazyVStack(alignment: .leading, spacing: 15) {
+                        ForEach(comments) { comment in
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "person.circle.fill")
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
                                     .foregroundColor(.gray)
+
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(comment.text ?? "")
+                                        .font(.body)
+                                        .foregroundColor(.primary)
+
+                                    Text(comment.timestamp ?? Date(), style: .time)
+                                        .font(.caption)
+                                        .foregroundColor(.gray)
+                                }
+
+                                Spacer()
                             }
-                            Spacer()
+                            .padding(.horizontal)
                         }
-                        .padding(.horizontal)
+
+                        // Anchor for scroll
+                        Color.clear.frame(height: 1).id("Bottom")
+                    }
+                    .padding(.top)
+                }
+                .onChange(of: comments.count) { _ in
+                    withAnimation {
+                        proxy.scrollTo("Bottom", anchor: .bottom)
                     }
                 }
-                .padding(.top)
             }
 
             Divider()
 
-            HStack {
+            // Input Bar
+            HStack(spacing: 10) {
                 TextField("Add a comment...", text: $newComment)
-                    .textFieldStyle(.roundedBorder)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .focused($isInputActive)
 
-                Button(action: saveComment) {
+                Button {
+                    saveComment()
+                } label: {
                     Image(systemName: "paperplane.fill")
+                        .font(.title2)
                         .foregroundColor(.blue)
                 }
+                .disabled(newComment.trimmingCharacters(in: .whitespaces).isEmpty)
             }
             .padding(.horizontal)
-            .padding(.bottom, 10)
+            .padding(.vertical, 10)
+            .background(Color(UIColor.systemBackground))
         }
-        .padding(.top)
+        .presentationDetents([.medium, .large])
+        .presentationDragIndicator(.visible)
+        .onTapGesture {
+            isInputActive = false
+        }
     }
 
     private func saveComment() {
-        guard !newComment.trimmingCharacters(in: .whitespaces).isEmpty else { return }
-        
+        let trimmed = newComment.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { return }
+
         let comment = Comment(context: viewContext)
         comment.id = UUID()
-        comment.text = newComment
+        comment.text = trimmed
         comment.timestamp = Date()
-        comment.articleURL = article.urlToImage ?? ""
-        
+        comment.articleURL = article.urlToImage ?? "unknown"
+
         do {
             try viewContext.save()
             newComment = ""
         } catch {
-            print("Failed to save comment: \(error.localizedDescription)")
+            print("❌ Failed to save comment: \(error.localizedDescription)")
         }
     }
 }

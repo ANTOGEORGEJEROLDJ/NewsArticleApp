@@ -104,7 +104,9 @@ struct NewsCardView: View {
 
         // Optional: Show comment screen on tap
         .sheet(isPresented: $showComments) {
-            CommentScreen(article: article) // You'll need to create this
+            CommentScreen(article: article)
+                .environment(\.managedObjectContext, PersistenceController.shared.container.viewContext)
         }
+
     }
 }
