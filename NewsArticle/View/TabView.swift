@@ -62,6 +62,7 @@ struct FloatingTabBar: View {
                 .clipShape(Capsule())
                 .shadow(color: .black.opacity(0.15), radius: 10, x: 0, y: 4)
         )
+
         .padding(.horizontal)
     }
 }
@@ -76,10 +77,12 @@ struct TabBarButton: View {
         Button(action: {
             withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
                 selectedTab = tab
+                
             }
+            
         }) {
             Image(systemName: icon)
-                .font(.system(size: 24, weight: .semibold))
+                .font(.system(size: 18, weight: .semibold))
                 .foregroundColor(selectedTab == tab ? color : .gray)
                 .padding(12)
                 .background(
@@ -88,6 +91,7 @@ struct TabBarButton: View {
                         .scaleEffect(selectedTab == tab ? 1.2 : 1.0)
                 )
                 .scaleEffect(selectedTab == tab ? 1.1 : 1.0)
+                
         }
     }
 }

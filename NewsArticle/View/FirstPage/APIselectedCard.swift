@@ -23,8 +23,8 @@ struct APIselectedCard: View {
             Image(imageName)
                 .resizable()
                 .scaledToFit()
-                .frame(width: 150, height: 120)
                 .cornerRadius(19)
+                .frame(width: 150, height: 120)
                 .padding(.trailing, 10)
         }
         .padding()

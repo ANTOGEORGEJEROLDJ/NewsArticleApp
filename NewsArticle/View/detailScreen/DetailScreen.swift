@@ -50,7 +50,7 @@ struct DetailScreen: View {
                             if let image = phase.image {
                                 image
                                     .resizable()
-                                    .frame(width: 380, height: 350)
+                                    .frame(width: 350, height: 350)
                                     .cornerRadius(30, corners: [.bottomLeft, .bottomRight])
 //                                    .shadow(radius: 10)
                                     .aspectRatio(contentMode: .fill)
@@ -74,7 +74,20 @@ struct DetailScreen: View {
                             .padding(.leading,10)
                         
                     }.padding(.top, -20)
-                    
+                    HStack {
+                        Image("saveIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .cornerRadius(15)
+                        
+                        Image("shareIcon")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 45, height: 45)
+                            .cornerRadius(15)
+                        
+                    }
                     // 🔷 Article metadata and description
                     VStack( spacing: 12) {
                         

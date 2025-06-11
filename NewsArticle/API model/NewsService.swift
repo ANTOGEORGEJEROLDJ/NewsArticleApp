@@ -16,11 +16,11 @@ class NewsService: ObservableObject {
 
         switch query {
         case "applenews":
-            urlString = "https://newsapi.org/v2/everything?q=apple&from=2025-06-09&to=2025-06-09&sortBy=popularity&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+            urlString = "https://https://newsapi.org/v2/everything?q=apple&from=2025-06-10&to=2025-06-10&sortBy=popularity&apiKey=cc25bb5dcf664f72b46179809c871f6e"
         case "businessnews":
-            urlString = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+            urlString = "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey==cc25bb5dcf664f72b46179809c871f6e"
         case "teslanews":
-            urlString = "https://newsapi.org/v2/everything?q=tesla&from=2025-05-10&sortBy=publishedAt&apiKey=cc25bb5dcf664f72b46179809c871f6e"
+            urlString = "https://newsapi.org/v2/everything?q=tesla&from=2025-05-11&sortBy=publishedAt&apiKey=cc25bb5dcf664f72b46179809c871f6e"
         case "techcrunch":
             urlString = "https://newsapi.org/v2/top-headlines?sources=techcrunch&apiKey=cc25bb5dcf664f72b46179809c871f6e"
         case "wallstreetjournal":
