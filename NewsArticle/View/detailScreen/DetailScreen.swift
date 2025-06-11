@@ -11,6 +11,8 @@ import SwiftUI
 struct DetailScreen: View {
     let articles: Article
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.managedObjectContext) private var viewContext
+
     
     var body: some View {
         ZStack {
@@ -75,6 +77,10 @@ struct DetailScreen: View {
                             .scaledToFit()
                             .frame(width: 45, height: 45)
                             .cornerRadius(15)
+                            .onTapGesture {
+                                saveArticles()
+                            }
+
                         
                         Image("shareIcon")
                             .resizable()
@@ -144,6 +150,26 @@ struct DetailScreen: View {
 
         return formatter.string(from: validDate)
     }
+    
+    func saveArticles() {
+        let savedArticle = SaveData(context: viewContext)
+        savedArticle.title = articles.title ?? "No Title"
+        savedArticle.descriptions = articles.description ?? "No Description"
+        savedArticle.urlToImage = articles.urlToImage ?? ""
+        savedArticle.publishedAt = articles.publishedAt ?? "Unknown Date"
+
+        do {
+            try viewContext.save()
+            print("✅ Article saved")
+        } catch {
+            let nsError = error as NSError
+            print("❌ Failed to save: \(nsError), \(nsError.userInfo)")
+        }
+    }
+
+
+
+
 }
 
 // MARK: - Corner Radius Extension

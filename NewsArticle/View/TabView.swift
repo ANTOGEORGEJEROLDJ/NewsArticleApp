@@ -20,6 +20,7 @@ struct TapView: View {
         case home
         case search
         case profile
+        case savedscreens
     }
 
     var body: some View {
@@ -31,6 +32,8 @@ struct TapView: View {
                     HomeScreen(topic: topic, isSignedIn: TapView.$isSignedIn)
                 case .search:
                     SearchScreen()
+                case .savedscreens:
+                    SavedScreen()
                 case .profile:
                     ProfileScreen(username: username, email: email, isSignedIn: TapView.$isSignedIn)
                 }
@@ -53,6 +56,7 @@ struct FloatingTabBar: View {
         HStack(spacing: 50) {
             TabBarButton(icon: "house.fill", tab: .home, selectedTab: $selectedTab, color: .orange)
             TabBarButton(icon: "magnifyingglass", tab: .search, selectedTab: $selectedTab, color: .orange)
+            TabBarButton(icon: "square.and.arrow.down.fill", tab: .savedscreens, selectedTab: $selectedTab, color: .orange)
             TabBarButton(icon: "person.fill", tab: .profile, selectedTab: $selectedTab, color: .orange)
         }
         .padding(.vertical, 12)
