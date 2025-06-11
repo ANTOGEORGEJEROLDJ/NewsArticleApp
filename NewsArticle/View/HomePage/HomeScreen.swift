@@ -1,9 +1,9 @@
-
-
-
-
-
-
+//
+//  SavedScreen.swift
+//  NewsArticle
+//
+//  Created by Paranjothi iOS MacBook Pro on 11/06/25.
+//
 
 import SwiftUI
 
@@ -14,7 +14,7 @@ struct HomeScreen: View {
     @StateObject private var newsService = NewsService()
     @State private var selectedSort: SortType = .newest
     @State private var selectedCategory: String = "All"
-    @State private var hasLoaded = false // 🔁 Prevent reloading
+    @State private var hasLoaded = false
 
     @Environment(\.dismiss) private var dismiss
 
@@ -30,7 +30,6 @@ struct HomeScreen: View {
 
                 ScrollView(showsIndicators: false) {
                     VStack(spacing: 20) {
-                        
                         // Header
                         HStack {
                             Button(action: {
@@ -59,7 +58,7 @@ struct HomeScreen: View {
                         }
                         .padding(.horizontal)
 
-                        // Breaking News Section
+                        // Breaking News
                         VStack(alignment: .leading, spacing: 10) {
                             Text("Breaking News")
                                 .font(.title3)
@@ -72,7 +71,7 @@ struct HomeScreen: View {
                             }
                         }
 
-                        // Recommendations Section
+                        // Recommendations
                         VStack(alignment: .leading, spacing: 10) {
                             HStack {
                                 Text("Recommendations")
@@ -104,7 +103,6 @@ struct HomeScreen: View {
                                             .shadow(color: .gray.opacity(0.3), radius: 10, x: 0, y: 5)
                                             .padding(.horizontal)
                                     }
-                                    .transition(.opacity)
                                 }
                             }
                         }
@@ -125,7 +123,7 @@ struct HomeScreen: View {
         .navigationBarBackButtonHidden()
     }
 
-    // MARK: - Filtered Articles
+    // Filtered Articles
     var filteredArticles: [Article] {
         var filtered = newsService.articles
 
@@ -145,7 +143,7 @@ struct HomeScreen: View {
         return filtered
     }
 
-    // MARK: - Delete Article
+    // Delete Article
     private func deleteArticle(_ article: Article) {
         withAnimation {
             newsService.articles.removeAll { $0 == article }
