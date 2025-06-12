@@ -13,6 +13,8 @@ struct DetailScreen: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.managedObjectContext) private var viewContext
     
+    @State private var isSave = false
+    
     var onDelete: (() -> Void)?
     
     @State private var showDeleteAlert = false
@@ -90,14 +92,22 @@ struct DetailScreen: View {
                         // Save
                         Button(action: {
                             saveArticles()
-                        }) {
-                            Image("saveIcon")
-                                .resizable()
-                                .frame(width: 45, height: 45)
-                        }
+                            isSave.toggle()
+                            }) {
+                                Image("saveIcon")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 27, height: 27) // ✅ Resize the heart icon only
+                                    .foregroundColor(isSave ? .red : .gray)
+                                    .padding(10)
+                                    .clipShape(Circle())
+                            }
+                        
                         .alert("Saved to bookmarks!", isPresented: $showSaveConfirmation) {
                             Button("OK", role: .cancel) {}
                         }
+                        
+                        
                         
                         // Share
                         Button(action: {
@@ -105,9 +115,14 @@ struct DetailScreen: View {
                         }) {
                             Image("shareIcon")
                                 .resizable()
-                                .frame(width: 42, height: 45)
+                                .scaledToFit()
+                                .frame(width: 29, height: 29) // ✅ Resize the heart icon only
+                                .padding(10)
+                                .clipShape(Circle())
                                 .padding(.trailing, 20)
                         }
+                        
+                        
                     }
                     
                     // Article Metadata

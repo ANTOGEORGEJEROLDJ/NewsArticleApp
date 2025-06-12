@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeScreen: View {
     var topic: String
+    var username: String
+    var email: String
     @Binding var isSignedIn: Bool
 
     @StateObject private var newsService = NewsService()
@@ -50,7 +52,7 @@ struct HomeScreen: View {
 
                             Spacer()
 
-                            NavigationLink(destination: ProfileScreen(username: "", email: "", isSignedIn: $isSignedIn)) {
+                            NavigationLink(destination:ProfileScreen(UserName: username, email: email, isSignedIn: TapView.$isSignedIn)) {
                                 Image(systemName: "person.circle.fill")
                                     .font(.largeTitle)
                                     .foregroundColor(.gray.opacity(0.7))

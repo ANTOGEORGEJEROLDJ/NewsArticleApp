@@ -29,13 +29,13 @@ struct TapView: View {
             VStack {
                 switch selectedTab {
                 case .home:
-                    HomeScreen(topic: topic, isSignedIn: TapView.$isSignedIn)
+                    HomeScreen(topic: topic,username: username, email: email, isSignedIn: TapView.$isSignedIn)
                 case .search:
                     SearchScreen()
                 case .savedscreens:
                     SavedScreen()
                 case .profile:
-                    ProfileScreen(username: username, email: email, isSignedIn: TapView.$isSignedIn)
+                    ProfileScreen(UserName: username, email: email, isSignedIn: TapView.$isSignedIn)
                 }
             }
             .ignoresSafeArea(.keyboard)

@@ -8,12 +8,10 @@
 import SwiftUI
 import FirebaseAuth
 import Firebase
-import GoogleSignInSwift
 import GoogleSignIn
-import FirebaseCore
+import GoogleSignInSwift
 import AuthenticationServices
 import CryptoKit
-
 
 struct SIgnInScreen: View {
     
@@ -28,142 +26,132 @@ struct SIgnInScreen: View {
     
     @State private var isSignedIn = false
     @State private var errorMessage = ""
-    
+
     var body: some View {
-            ScrollView {
-                VStack {
-                    Image("loginImage")
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 175, height: 175)
-                        .padding(.top)
-                    
-                    Text("Login to continue")
-                        .padding()
-                        .font(.headline)
-                        .foregroundColor(.black.opacity(0.5))
-                }
-                .padding(.top)
+        ScrollView {
+            VStack {
+                Image("loginImage")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 175, height: 175)
+                    .padding(.top)
                 
-                Group {
-                    VStack(spacing: 20) {
-                        CustomTextField(icon: "person.fill", placeHolder: "UserName", text: $UserName)
-                        CustomTextField(icon: "envelope.fill", placeHolder: "Mail", text: $email)
-                        CustomTextField(icon: "lock.fill", placeHolder: "Password", text: $password)
-                    }
+                Text("Login to continue")
                     .padding()
-                    .background(.ultraThinMaterial)
-                    .cornerRadius(20)
-                    .shadow(radius: 2)
-                    .padding(.horizontal)
-                    .padding(.top, 20)
-                }
-                
-                Spacer()
-                VStack(spacing: 20) {
-                    // NavigationLink to SelectNewsScreen
-                    NavigationLink(
-                        destination: SelectNewsScreen(username: UserName, email: email)
-                            .environment(\.managedObjectContext, viewContext),
-                        isActive: $navigationToSelectNewsScreen
-                    ) {
-                        EmptyView()
-                    }
-                    
-                    // Login Button
-                    Button(action: {
-                        registerWithEmail()
-                    }) {
-                        Text("Login")
-                            .frame(width: 258, height: 22)
-                            .padding()
-                            .bold()
-                            .background(Color.orange.opacity(0.4))
-                            .foregroundColor(.black.opacity(0.7))
-                            .font(.headline)
-                            .cornerRadius(15)
-                            .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    }
-                    .padding(.top, -30)
-                    
-                    HStack(spacing: 20) {
-                        // Google Sign-In Button
-                        Button(action: {
-                            handleGoogleSignIn()
-                        }) {
-                            Image("google")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 19, height: 19)
-                        }
-                        .frame(width: 70, height: 22)
-                        .padding()
-                        .foregroundColor(.white)
-                        .background(Color.orange.opacity(0.3))
-                        .font(.headline)
-                        .cornerRadius(15)
-                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                        
-                        // Apple Sign-In Placeholder
-                        Button(action: {
-                            appleLoginManager.startSignInWithAppleFlow()
-                        }) {
-                            Image("appleicon")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 19, height: 19)
-                        }
-                        .frame(width: 70, height: 22)
-                        .padding()
-                        .foregroundColor(.orange)
-                        .background(Color.orange.opacity(0.3))
-                        .font(.headline)
-                        .cornerRadius(15)
-                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
-                    }
-                }
-                .padding(.top, 50)
+                    .font(.headline)
+                    .foregroundColor(.black.opacity(0.5))
             }
-        
+            .padding(.top)
+            
+            VStack(spacing: 20) {
+                CustomTextField(icon: "person.fill", placeHolder: "UserName", text: $UserName)
+                CustomTextField(icon: "envelope.fill", placeHolder: "Mail", text: $email)
+                CustomTextField(icon: "lock.fill", placeHolder: "Password", text: $password)
+            }
+            .padding()
+            .background(.ultraThinMaterial)
+            .cornerRadius(20)
+            .shadow(radius: 2)
+            .padding(.horizontal)
+            .padding(.top, 10)
+            
+            
+                    
+            NavigationLink(
+                destination: SelectNewsScreen(username: UserName, email: email)
+                    .environment(\.managedObjectContext, viewContext),
+                isActive: $navigationToSelectNewsScreen
+            ) {
+                EmptyView()
+            }
+
+            Button(action: {
+                registerWithEmail()
+            }) {
+                Text("Login")
+                    .frame(width: 258, height: 22)
+                    .padding()
+                    .bold()
+                    .background(Color.orange.opacity(0.4))
+                    .foregroundColor(.black.opacity(0.7))
+                    .font(.headline)
+                    .cornerRadius(15)
+                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
+            }
+            .padding(.top, 35)
+            
+            HStack(spacing: 20) {
+                Button(action: {
+                    handleGoogleSignIn()
+                }) {
+                    Image("google")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 19, height: 19)
+                }
+                .frame(width: 70, height: 22)
+                .padding()
+                .background(Color.orange.opacity(0.3))
+                .cornerRadius(15)
+                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
+                
+                Button(action: {
+                    appleLoginManager.startSignInWithAppleFlow()
+                }) {
+                    Image("appleicon")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 19, height: 19)
+                }
+                .frame(width: 70, height: 22)
+                .padding()
+                .background(Color.orange.opacity(0.3))
+                .cornerRadius(15)
+                .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 5)
+            }
+            .padding(.top, 30)
+        }
     }
     
-    // MARK: - Email Sign-In
-    func signInWithEmail() {
-        guard !email.isEmpty, !password.isEmpty else {
-            print("Email or password cannot be empty.")
-            return
-        }
-
-        guard email.contains("@"), email.contains(".") else {
-            print("Invalid email format.")
-            return
-        }
-
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
-            if let error = error {
-                print("Login failed: \(error.localizedDescription)")
-                return
-            }
-
-            print("Login successful!")
-            self.UserName = authResult?.user.displayName ?? ""
-            self.navigationToSelectNewsScreen = true
-        }
-    }
-
+    // MARK: - Email Register and Login
     func registerWithEmail() {
+        guard !email.isEmpty, !password.isEmpty else {
+            print("Email or password empty")
+            return
+        }
+        
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             if let error = error {
                 print("Registration failed: \(error.localizedDescription)")
                 return
             }
 
-            print("User registered!")
-            self.UserName = authResult?.user.displayName ?? ""
-            self.navigationToSelectNewsScreen = true
+            // Set the display name
+            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+            changeRequest?.displayName = self.UserName
+            changeRequest?.commitChanges { error in
+                if let error = error {
+                    print("Failed to set display name: \(error.localizedDescription)")
+                } else {
+                    print("✅ Display name set")
+                    self.navigationToSelectNewsScreen = true
+                }
+            }
         }
     }
 
+    func signInWithEmail() {
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            if let error = error {
+                print("Login failed: \(error.localizedDescription)")
+                return
+            }
+            
+            self.UserName = Auth.auth().currentUser?.displayName ?? ""
+            self.navigationToSelectNewsScreen = true
+        }
+    }
+    
     // MARK: - Google Sign-In
     func handleGoogleSignIn() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
@@ -194,8 +182,7 @@ struct SIgnInScreen: View {
                 if let error = error {
                     print("❌ Firebase Sign-In failed: \(error.localizedDescription)")
                 } else {
-                    self.isSignedIn = true
-                    self.UserName = authResult?.user.displayName ?? ""
+                    self.UserName = authResult?.user.displayName ?? "Google User"
                     self.email = authResult?.user.email ?? ""
                     self.navigationToSelectNewsScreen = true
                     print("✅ Google Sign-In Success: \(authResult?.user.email ?? "")")
@@ -203,41 +190,31 @@ struct SIgnInScreen: View {
             }
         }
     }
-    
-    
 }
 
 @available(iOS 13.0, *)
 class AppleSignInManager: NSObject {
-
-//    static let shared = AppleSignInManager()
-    var harisCount: Int = 2
-    let harisNewFriend: String? = "jeeva"
-    var window: UIWindow? = nil
-
     func startSignInWithAppleFlow() {
-        let appleIDProvider = ASAuthorizationAppleIDProvider()
-        let request = appleIDProvider.createRequest()
+        let provider = ASAuthorizationAppleIDProvider()
+        let request = provider.createRequest()
         request.requestedScopes = [.fullName, .email]
 
-        let authorizationController = ASAuthorizationController(authorizationRequests: [request])
-        authorizationController.delegate = self
-        authorizationController.presentationContextProvider = self
-        authorizationController.performRequests()
+        let controller = ASAuthorizationController(authorizationRequests: [request])
+        controller.delegate = self
+        controller.presentationContextProvider = self
+        controller.performRequests()
     }
 }
 
 @available(iOS 13.0, *)
 extension AppleSignInManager: ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
-
     func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
-        return window ?? UIWindow()
+        return UIWindow()
     }
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
-
+        // Add Apple sign-in logic if needed
     }
-
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
         print("❌ Apple Sign-In Failed: \(error.localizedDescription)")
