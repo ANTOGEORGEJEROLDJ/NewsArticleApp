@@ -14,6 +14,8 @@ class NewsService: ObservableObject {
         let query = topic.lowercased().replacingOccurrences(of: " ", with: "")
         var urlString = ""
 
+//        Webside URL - https://newsapi.org/
+        
         switch query {
         case "applenews":
             urlString = "https://https://newsapi.org/v2/everything?q=apple&from=2025-06-10&to=2025-06-10&sortBy=popularity&apiKey=cc25bb5dcf664f72b46179809c871f6e"
